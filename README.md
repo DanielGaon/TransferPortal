@@ -9,4 +9,4 @@ GET /files/name #Opens the uploaded file in browser
 
 *Make sure the files are in local folder, for practice there are 2 examples files named:
 example-1.pdf
-test.txt
+test.txt command- curl -X POST http://localhost:(chosen port number)/upload -F "file=@./test.txt"
