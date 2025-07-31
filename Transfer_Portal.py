@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 import subprocess
 
@@ -9,12 +9,25 @@ UPLOAD_FOLDER = 'uploads'
 SCANNED_FOLDER = 'scanned'
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'zip', 'xlsx', 'docx'}
 
+# Ensures directories exist
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(SCANNED_FOLDER, exist_ok=True)
 
+# Set config
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+#Configures Favicon
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(
+        os.path.join(app.root_path, 'static'),
+        'favicon.ico',
+        mimetype='image/vnd.microsoft.icon')
+
+#Main page
 @app.route("/")
-def main_error():
-    result = {'msg':"root endpoint not supported"}
+def main_page():
+    result = {'msg':"Welcome to Altshare-File Transfer Portal"}
     return result
 
 #This function checks whether a given filename is allowed based on its file extension 
