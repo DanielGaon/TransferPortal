@@ -35,15 +35,6 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def scan_with_defender(file_path):
-    defender_path = r"C:\ProgramData\Microsoft\Windows Defender\Platform\4.18.25060.7-0"
-    latest_dir = sorted(os.listdir(defender_path))[-1]
-    full_cmd = os.path.join(defender_path, latest_dir, "MpCmdRun.exe")
-    command = [full_cmd, "-Scan", "-ScanType", "3", "-File", file_path]
-
-    result = subprocess.run(command, capture_output=True, text=True)
-    output = result.stdout
-    return "Threats Detected" not in output, output
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -59,16 +50,12 @@ def upload_file():
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
 
-        clean, scan_output = scan_with_defender(filepath)
-
-        if clean:
-            os.rename(filepath, os.path.join(SCANNED_FOLDER, filename))
-            return jsonify({'message': 'File uploaded and clean', 'filename': filename}), 200
-        else:
-            os.remove(filepath)
-            return jsonify({'message': 'File infected and deleted', 'scan_result': scan_output}), 400
+        return jsonify({'message': 'File uploaded (no scan)', 'filename': filename}), 200
 
     return jsonify({'error': 'File type not allowed'}), 400
+
+
+    
 
 #Returns a list of filenames in that folder that have already been scanned and uploaded successfully
 @app.route('/files', methods=['GET'])
