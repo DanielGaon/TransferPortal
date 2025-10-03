@@ -1,4 +1,4 @@
-# File Transfer Portal – Altshare
+# File Transfer Portal 
 
 
 ## API
@@ -23,14 +23,3 @@ curl -X POST http://localhost:<port>/upload -F "file=@./test.txt"
 curl -X DELETE http://localhost:<port>/files/test.txt
 ```
 
-#Next steps
-
-Add size restrictions
-
-Add Anti-virus scan
-
-Configure what happens with duplicate names and upload copys
-
-Add login option and audit of who uploads
-
-Add option for folders
