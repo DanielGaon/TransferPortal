@@ -9,4 +9,7 @@ COPY static static/
 RUN python3 -m venv portalenv
 ENV PATH="/transferportal/portalenv/bin:$PATH"
 RUN pip install -r requirements.txt
+EXPOSE 8080
+HEALTHCHECK --interval=5s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl --fail http://localhost:8080 || exit 1
 CMD ["python3", "Transfer_Portal.py"]
