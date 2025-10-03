@@ -34,6 +34,12 @@ jobs:
           echo "🔍 Running curl test..."
           curl -f http://localhost:8080 || (echo "❌ App did not respond" && exit 1)
 
+          echo "📤 POST /upload"
+          curl -f -X POST http://localhost:8080/upload -F "file=@./test.txt"
+
+          echo "🗑️ DELETE /files/test.txt"
+          curl -f -X DELETE http://localhost:8080/files/test.txt
+
           echo "✅ Test passed!"
 
       - name: Cleanup
