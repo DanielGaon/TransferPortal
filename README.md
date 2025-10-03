@@ -2,7 +2,7 @@
 
 
 ## API
-REST API Endpoints for tranfering files 
+REST API Endpoints for tranfering files using **Flask**
 
 GET /files # List all uploaded files 
 
