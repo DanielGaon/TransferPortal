@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: Transfer_Files API CI/CD Pipeline
 
 on:
   push:
